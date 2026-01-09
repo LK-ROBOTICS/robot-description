@@ -74,6 +74,36 @@
         </collision>
     </link>
 
+    <!-- lidar extension kit  -->
+    <link name="extension_kit_link">
+        <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <mesh filename="$(find robot_description)/pointfoot/WF_TRON1A/meshes/tron_extension_kit_assenbly.stl" scale="1 1 1"/>
+        </geometry>
+        </visual>
+    </link>
+    <joint name="extension_kit_joint" type="fixed">
+        <parent link="base_Link"/>
+        <child link="extension_kit_link"/>
+        <origin rpy="0 0 ${PI}" xyz="0 0 0.01"/>
+    </joint>
+
+    <link name="mid360_link">
+        <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <mesh filename="$(find livox_laser_simulation)/meshes/livox_mid-360-90x.dae"/>
+        </geometry>
+        </visual>
+    </link>
+    <joint name="mid360_joint" type="fixed">
+        <parent link="extension_kit_link"/>
+        <child link="mid360_link"/>
+        <origin rpy="${PI} 0 0" xyz="0 0 0.182"/>
+    </joint>
+
+
     <xacro:leg name="L" mirror="1" mirror_STL="True">
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </xacro:leg>
