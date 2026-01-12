@@ -6,7 +6,7 @@
 
     <xacro:macro name="leg" params="name mirror mirror_STL *origin">
 
-        <joint name="abad_${name}_joint" type="revolute">
+        <joint name="abad_${name}_Joint" type="revolute">
             <origin
                 xyz="${abad_offset_x} ${abad_offset_y*mirror} ${abad_offset_z}"
                 rpy="0 0 0"/>
@@ -41,7 +41,7 @@
         </link>
 
 
-        <joint name="hip_${name}_joint" type="revolute">
+        <joint name="hip_${name}_Joint" type="revolute">
             <origin
                 xyz="${hip_offset_x} ${hip_offset_y*mirror} ${hip_offset_z}"
                 rpy="0 0 0"/>
@@ -76,7 +76,7 @@
         </link>
 
 
-        <joint name="knee_${name}_joint" type="revolute">
+        <joint name="knee_${name}_Joint" type="revolute">
             <origin
                 xyz="${knee_offset_x} ${knee_offset_y*mirror} ${knee_offset_z}"
                 rpy="0 0 0"/>
@@ -117,7 +117,7 @@
         </link>
 
 
-        <joint name="wheel_${name}_joint" type="revolute">
+        <joint name="wheel_${name}_Joint" type="revolute">
             <origin
                 xyz="${wheel_offset_x} ${wheel_offset_y*mirror} ${wheel_offset_z}"
                 rpy="0 0 0"/>

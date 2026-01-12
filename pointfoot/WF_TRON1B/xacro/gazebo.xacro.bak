@@ -68,46 +68,6 @@
         <material>Gazebo/Red</material>
     </gazebo>
 
-    <!-- lidar extension kit  -->
-    <gazebo reference="mid360_link">
-        <sensor type="ray" name="laser_livox">
-        <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
-        <always_on>true</always_on>
-        <update_rate>10</update_rate>
-        <plugin name="gazebo_ros_laser_controller" filename="liblivox_laser_simulation.so">
-            <ray>
-            <scan>
-                <horizontal>
-                <samples>100</samples>
-                <resolution>1</resolution>
-                <min_angle>-3.1415926535897931</min_angle>
-                <max_angle>3.1415926535897931</max_angle>
-                </horizontal>
-                <vertical>
-                <samples>50</samples>
-                <resolution>1</resolution>
-                <min_angle>-3.1415926535897931</min_angle>
-                <max_angle>3.1415926535897931</max_angle>
-                </vertical>
-            </scan>
-            <range>
-                <min>0.2</min>
-                <max>50</max>
-                <resolution>1</resolution>
-            </range>
-            </ray>
-            <samples>20000</samples>
-            <downsample>1</downsample>
-            <csv_file_name>mid360-real-centr.csv</csv_file_name>
-            <publish_pointcloud_type>2</publish_pointcloud_type>
-            <ros_topic>/livox/lidar</ros_topic>
-            <frameName>mid360_link</frameName>
-        </plugin>
-        </sensor>
-    </gazebo>
-
-
     <!-- Left leg -->
     <gazebo reference="abad_L_Link">
         <mu1>0.2</mu1>
