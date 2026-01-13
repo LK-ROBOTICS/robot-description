@@ -80,7 +80,7 @@
     <!-- lidar extension kit  -->
     <link name="extension_kit_link">
         <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="0 0 ${PI}" xyz="0 0 0"/>
         <geometry>
             <mesh filename="$(find robot_description)/pointfoot/WF_TRON1A/meshes/tron_extension_kit_assenbly.stl" scale="1 1 1"/>
         </geometry>
@@ -89,7 +89,7 @@
     <joint name="extension_kit_joint" type="fixed">
         <parent link="base_Link"/>
         <child link="extension_kit_link"/>
-        <origin rpy="0 0 ${PI}" xyz="0 0 0.01"/>
+        <origin rpy="0 0 0" xyz="0 0 0.01"/>
     </joint>
 
     <link name="mid360_link">
@@ -106,6 +106,13 @@
         <origin rpy="${PI} 0 0" xyz="0 0 0.182"/>
     </joint>
 
+    <!-- Livox IMU link (mid360_link와 동일 좌표계, 센서 분리용) -->
+    <link name="livox_imu_link"/>
+    <joint name="livox_imu_joint" type="fixed">
+        <parent link="mid360_link"/>
+        <child link="livox_imu_link"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
 
     <xacro:leg name="L" mirror="1" mirror_STL="True">
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -126,15 +133,16 @@
         </gazebo>
     </xacro:if>
 
-    <!-- ****************************************** D435 Camera ******************************************************** -->
-    <!-- <joint name="d435_joint" type="fixed">
-        <origin rpy="0 1.063778179 0" xyz="0.13223 0.0222 -0.26826"/>
+    <!-- ****************************************** extension kit D435 Camera ******************************************************** -->
+    <!-- 메인 카메라 링크 -->
+    <joint name="d435_joint" type="fixed">
+        <origin rpy="0 0.26179939 0" xyz="0.213 0 -0.017"/>
         <parent link="base_Link"/>
         <child link="d435_Link"/>
     </joint>
     <link name="d435_Link">
         <visual>
-            <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0.0149 -0.0175 0"/>
+            <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0.0 0.0 0"/>
             <geometry>
                 <mesh filename="$(find robot_description)/pointfoot/meshes_camera/d435.dae"/>
             </geometry>
@@ -145,7 +153,39 @@
                 <box size="0.02505 0.09 0.025"/>
             </geometry>
         </collision>
-    </link> -->
+    </link>
+
+    <!-- Depth Frame -->
+    <joint name="camera_depth_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="d435_Link"/>
+        <child link="camera_depth_frame"/>
+    </joint>
+    <link name="camera_depth_frame"/>
+
+    <!-- Depth Optical Frame (Z forward) -->
+    <joint name="camera_depth_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        <parent link="camera_depth_frame"/>
+        <child link="camera_depth_optical_frame"/>
+    </joint>
+    <link name="camera_depth_optical_frame"/>
+
+    <!-- RGB Frame -->
+    <joint name="camera_rgb_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="d435_Link"/>
+        <child link="camera_rgb_frame"/>
+    </joint>
+    <link name="camera_rgb_frame"/>
+
+    <!-- RGB Optical Frame (Z forward) -->
+    <joint name="camera_rgb_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        <parent link="camera_rgb_frame"/>
+        <child link="camera_rgb_optical_frame"/>
+    </joint>
+    <link name="camera_rgb_optical_frame"/>
     <!-- ****************************************** D435 Camera END ******************************************************** -->
 
 </robot>

@@ -94,7 +94,7 @@
 
     <link name="mid360_link">
         <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="${PI} 0 0" xyz="0 0 0"/>
         <geometry>
             <mesh filename="$(find livox_laser_simulation)/meshes/livox_mid-360-90x.dae"/>
         </geometry>
@@ -103,9 +103,16 @@
     <joint name="mid360_joint" type="fixed">
         <parent link="extension_kit_link"/>
         <child link="mid360_link"/>
-        <origin rpy="${PI} 0 0" xyz="0 0 0.182"/>
+        <origin rpy="0 0 0" xyz="0 0 0.182"/>
     </joint>
 
+    <!-- Livox IMU link (mid360_link와 동일 좌표계, 센서 분리용) -->
+    <link name="livox_imu_link"/>
+    <joint name="livox_imu_joint" type="fixed">
+        <parent link="mid360_link"/>
+        <child link="livox_imu_link"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
 
     <xacro:leg name="L" mirror="1" mirror_STL="True">
         <origin rpy="0 0 0" xyz="0 0 0"/>

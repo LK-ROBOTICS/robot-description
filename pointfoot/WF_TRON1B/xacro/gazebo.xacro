@@ -100,13 +100,34 @@
             <samples>20000</samples>
             <downsample>1</downsample>
             <csv_file_name>mid360-real-centr.csv</csv_file_name>
-            <publish_pointcloud_type>2</publish_pointcloud_type>
-            <ros_topic>/livox/lidar</ros_topic>
+            <publish_pointcloud_type>3</publish_pointcloud_type>
+            <ros_topic>/livox/lidar_sim</ros_topic>
             <frameName>mid360_link</frameName>
         </plugin>
         </sensor>
     </gazebo>
 
+    <!-- Livox Mid360 내장 IMU (시뮬레이션용) -->
+    <gazebo reference="livox_imu_link">
+        <gravity>true</gravity>
+        <sensor name="livox_imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>200</update_rate>
+            <visualize>false</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="livox_imu_plugin">
+                <topicName>/livox/imu</topicName>
+                <bodyName>livox_imu_link</bodyName>
+                <updateRateHZ>200.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>livox_imu_link</frameName>
+                <initial_orientation_as_reference>false</initial_orientation_as_reference>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
 
     <!-- Left leg -->
     <gazebo reference="abad_L_Link">

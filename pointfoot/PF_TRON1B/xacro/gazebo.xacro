@@ -124,4 +124,37 @@
         <kd value="100.0"/>
     </gazebo>
 
+    <!-- ****************************************** D435 Depth Camera ******************************************************** -->
+    <gazebo reference="d435_Link">
+        <sensor name="d435_camera" type="depth">
+            <update_rate>15</update_rate>
+            <camera>
+                <horizontal_fov>1.047</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>1.5</far>
+                </clip>
+            </camera>
+            <plugin name="d435_plugin" filename="libgazebo_ros_openni_kinect.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>15.0</updateRate>
+                <cameraName>camera</cameraName>
+                <imageTopicName>color/image_raw</imageTopicName>
+                <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+                <depthImageTopicName>depth/image_rect_raw</depthImageTopicName>
+                <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+                <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+                <frameName>camera_depth_optical_frame</frameName>
+                <pointCloudCutoff>0.1</pointCloudCutoff>
+                <pointCloudCutoffMax>1.5</pointCloudCutoffMax>
+            </plugin>
+        </sensor>
+    </gazebo>
+    <!-- ****************************************** D435 Depth Camera END ******************************************************** -->
+
 </robot>
