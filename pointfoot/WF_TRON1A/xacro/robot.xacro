@@ -80,16 +80,16 @@
     <!-- lidar extension kit  -->
     <link name="extension_kit_link">
         <visual>
-        <origin rpy="0 0 ${PI}" xyz="0 0 0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-            <mesh filename="$(find robot_description)/pointfoot/WF_TRON1A/meshes/tron_extension_kit_assenbly.stl" scale="1 1 1"/>
+            <mesh filename="$(find robot_description)/pointfoot/WF_TRON1A/meshes/expansion_mount.stl" scale="1 1 1"/>
         </geometry>
         </visual>
     </link>
     <joint name="extension_kit_joint" type="fixed">
         <parent link="base_Link"/>
         <child link="extension_kit_link"/>
-        <origin rpy="0 0 0" xyz="0 0 0.01"/>
+        <origin rpy="0 0 0" xyz="0 0 0.016"/>
     </joint>
 
     <link name="mid360_link">
@@ -103,15 +103,15 @@
     <joint name="mid360_joint" type="fixed">
         <parent link="extension_kit_link"/>
         <child link="mid360_link"/>
-        <origin rpy="${PI} 0 0" xyz="0 0 0.182"/>
+        <origin rpy="${PI} 0 0" xyz="0 0 0.162"/>
     </joint>
 
-    <!-- Livox IMU link (mid360_link와 동일 좌표계, 센서 분리용) -->
+    <!-- Livox IMU link (FAST-LIO extrinsic_T와 일치: LiDAR → IMU) -->
     <link name="livox_imu_link"/>
     <joint name="livox_imu_joint" type="fixed">
         <parent link="mid360_link"/>
         <child link="livox_imu_link"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="0 0 0" xyz="-0.011 -0.02329 0.04412"/>
     </joint>
 
     <xacro:leg name="L" mirror="1" mirror_STL="True">
@@ -134,13 +134,13 @@
     </xacro:if>
 
     <!-- ****************************************** extension kit D435 Camera ******************************************************** -->
-    <!-- 메인 카메라 링크 -->
-    <joint name="d435_joint" type="fixed">
-        <origin rpy="0 0.26179939 0" xyz="0.213 0 -0.017"/>
+    <!-- 카메라 링크 -->
+    <joint name="camera_joint" type="fixed">
+        <origin rpy="0 0.52359878 0" xyz="0.208 0 -0.0229"/>
         <parent link="base_Link"/>
-        <child link="d435_Link"/>
+        <child link="camera_link"/>
     </joint>
-    <link name="d435_Link">
+    <link name="camera_link">
         <visual>
             <origin rpy="1.5707963267948966 0 1.5707963267948966" xyz="0.0 0.0 0"/>
             <geometry>
@@ -158,7 +158,7 @@
     <!-- Depth Frame -->
     <joint name="camera_depth_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="d435_Link"/>
+        <parent link="camera_link"/>
         <child link="camera_depth_frame"/>
     </joint>
     <link name="camera_depth_frame"/>
@@ -174,7 +174,7 @@
     <!-- RGB Frame -->
     <joint name="camera_rgb_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="d435_Link"/>
+        <parent link="camera_link"/>
         <child link="camera_rgb_frame"/>
     </joint>
     <link name="camera_rgb_frame"/>

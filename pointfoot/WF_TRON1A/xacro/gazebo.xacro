@@ -38,7 +38,7 @@
     </gazebo> -->
     
     <!-- D435 Depth Camera (RealSense 토픽 호환) -->
-    <gazebo reference="d435_Link">
+    <gazebo reference="camera_link">
         <sensor name="d435_camera" type="depth">
             <update_rate>15</update_rate>
             <camera>
@@ -49,8 +49,8 @@
                     <format>R8G8B8</format>
                 </image>
                 <clip>
-                    <near>0.2</near>
-                    <far>2.0</far>  <!-- clip_distance와 동일 -->
+                    <near>0.1</near>
+                    <far>10.0</far> 
                 </clip>
             </camera>
             <plugin name="d435_plugin" filename="libgazebo_ros_openni_kinect.so">
@@ -63,6 +63,9 @@
                 <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
                 <pointCloudTopicName>depth/color/points</pointCloudTopicName>
                 <frameName>camera_depth_optical_frame</frameName>
+                <!-- 포인트클라우드 거리 필터링 -->
+                <pointCloudCutoff>0.3</pointCloudCutoff>
+                <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
             </plugin>
         </sensor>
     </gazebo>
